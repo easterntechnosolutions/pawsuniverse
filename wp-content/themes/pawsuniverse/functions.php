@@ -73,7 +73,13 @@ function enqueue_scripts_function() {
 	if (!is_admin()) {
 		wp_enqueue_script('jquery');
 		// wp_enqueue_style ( 'bootstrapcss', 'https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css' );
-		wp_enqueue_style ( 'style', get_stylesheet_directory_uri() . '/css/style.css' );
+		wp_enqueue_style ( 'main', get_stylesheet_directory_uri() . '/css/main.css' );
+
+		// Swiper CSS from CDN
+		wp_enqueue_style('swiper-css', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css');
+    
+		// Swiper JS from CDN
+		wp_enqueue_script('swiper-js', 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js', array(), null, true);
 	}
 
     // This also removes some inline CSS variables for colors since 5.9 - global-styles-inline-css
@@ -98,9 +104,15 @@ remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'admin_print_styles', 'print_emoji_styles' );
 remove_action( 'admin_print_scripts', 'print_emoji_detection_script', 7 );
 
+function my_acf_wysiwyg_remove_wpautop( $value, $post_id, $field ) {
+    remove_filter('acf_the_content', 'wpautop');
+    return $value;
+}
+add_filter('acf/format_value/type=wysiwyg', 'my_acf_wysiwyg_remove_wpautop', 10, 3);
+
 /**
  * Add/Load CSS and JS files in Footer.
- * Author: ETS.
+ * Author: ETS I.
  */
 add_action( 'wp_footer', 'add_js_footer_function' );
 function add_js_footer_function() {
@@ -114,6 +126,52 @@ function add_js_footer_function() {
 		wp_enqueue_style ( 'font-awesome', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
 		wp_enqueue_script( 'scriptjs', get_stylesheet_directory_uri() . '/js/script.js' );
 	}
+}
+
+class Custom_Walker_Nav_Menu extends Walker_Nav_Menu {
+    
+    // Start an element (menu item)
+    public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
+        // Get the default WordPress classes for the <li> element
+        $classes = empty( $item->classes ) ? array() : (array) $item->classes;
+        
+        // Add your custom class "nav-item" to the array of classes
+        $classes[] = 'nav-item';
+        
+        // Join the classes into a string with a space delimiter
+        $class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
+        $class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+        
+        // Start the output for the list item with the class names
+        $output .= '<li' . $class_names . '>';
+        
+        // Determine if this item has children (submenu)
+        $has_children = !empty( $args->has_children );
+        
+        // Define the anchor class (basic class for links)
+        $link_class = 'nav-link text-white';
+        
+        // If the item has children (a submenu), add the 'dropdown-toggle' class
+        if ( $has_children ) {
+            $link_class .= ' dropdown-toggle';
+        }
+        
+        // Add the link with the item title and appropriate classes
+        $output .= '<a href="' . esc_url( $item->url ) . '" class="' . esc_attr( $link_class ) . '">';
+        $output .= esc_html( $item->title );
+        $output .= '</a>';
+    }
+
+    // Start a submenu
+    public function start_lvl( &$output, $depth = 0, $args = null ) {
+        $output .= '<ul class="dropdown-menu">';  // Add the dropdown-menu class for submenus
+    }
+    
+    // Add a flag to determine if an item has children
+    public function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
+        $element->has_children = ! empty( $children_elements[ $element->ID ] );
+        parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
+    }
 }
 
 /**
@@ -151,6 +209,18 @@ add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
  function my_acf_google_map_api( $api ){
 	$api['key'] = '';
 	return $api;	
+}
+
+/**
+ * Allowed SVG file upload to Media Gallery.
+ * Author: ETS I.
+ */
+add_filter('upload_mimes', 'add_file_types_to_uploads');
+function add_file_types_to_uploads($file_types){
+	$new_filetypes = array();
+	$new_filetypes['svg'] = 'image/svg+xml';
+	$file_types = array_merge($file_types, $new_filetypes );
+	return $file_types;
 }
 
 /**

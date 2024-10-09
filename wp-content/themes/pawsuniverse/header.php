@@ -1,175 +1,107 @@
-<!doctype html>
-<html <?php language_attributes(); ?> class="no-js">
-	<head>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?>>
+<head>
+	<meta charset="<?php bloginfo( 'charset' ); ?>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<?php wp_head(); ?>
 
-		<meta charset="<?php bloginfo( 'charset' ); ?>" />
-		<!-- Mobile Meta -->
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		
-		<!-- Favicons and Icons -->
-		<link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/images/apple-icon-touch.png">
-		<link rel="icon" href="<?php echo get_template_directory_uri(); ?>/favicon.png">
-		<!--[if IE]>
-			<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
-			<![endif]-->
-		<!-- or, set /favicon.ico for IE10 win -->
-		<meta name="msapplication-TileColor" content="#ffffff">
-		<meta name="msapplication-TileImage" content="<?php echo get_template_directory_uri(); ?>/images/win8-tile-icon.png">
+    <title>Mega Menu in Navigation</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"> -->
 
-		<!-- wordpress head functions -->
-		<?php wp_head(); ?>
-		<!-- end of wordpress head -->
+</head>
 
-	</head>
+<body <?php body_class('paws_body'); ?>>
 
-	<body <?php body_class(); ?>>
-		<div class="page-wrapper">
-			<!-- Main Header--><?php
-			$blog_info = get_bloginfo( 'name' );
-			$logo_full = "full";
-			$attachment_image = get_field('logo', 'option');
-			$logo_array = wp_get_attachment_image_src( $attachment_image['ID'], $logo_full ); ?>
-			<header class="main-header">
-				<div class="main-box">
-					<div class="auto-container">
-						<div class="outer-container clearfix">
-							<div class="logo-box">
-								<div class="logo" style="padding: 1px !important;">
-									<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="img-responsive"><?php
-										if ( !empty($logo_array) ) { ?>
-											<img height="100%" width="220px" src="<?php echo $logo_array[0]; ?>" alt="<?php echo $blog_info; ?>" title="<?php echo $blog_info; ?>" /><?php
-										} else {
-											echo $blog_info;
-										} ?>
-									</a>
+	<?php
+		$globalHeader_LogoSection    = get_field( 'logo', 'options' );
+		$globalHeader_enquiry_number = get_field( 'enquiry_number', 'options' );
+		$globalHeader_location       = get_field( 'location', 'options' );
+	?>
+	<!-- Header Section -->
+	<header id="global_header_section" class="global_header_section">
+
+		<!-- Top Header Section -->
+		<div id="global_header_top_section" class="global_header_top_section">
+			<div class="container-fluid py-2 bg-white">
+				<div class="row align-items-center">
+					<!-- Left Section: Contact Numbers -->
+					<div class="col-md-4 text-md-start text-center global_header_left_section">
+						<div class="info-container">
+							<div class="info-block">
+								<div class="icon">
+									<img src="<?php echo get_stylesheet_directory_uri() ?>/images/line_phone_call.svg" width="40" height="40" alt="Calls" class="img-fluid">
+								</div>
+								<div class="text">
+									<p>Enquiry</p>
+									<a href="tel:+917837157157" alt="+91-7837157157" title="+91-7837157157">+91-7837157157</a>
 								</div>
 							</div>
-							<div class="nav-outer clearfix">
-								<nav class="main-menu">
-									<div class="navbar-collapse collapse clearfix">
-										<?php
-											wp_nav_menu(
-												array(
-													'theme_location' => 'primary-navigation',
-													'menu_class'     => 'primary-navigation navigation clearfix',
-													'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-												)
-											);
-										?>
-									</div>
-								</nav>
+							<div class="divider"></div>
+							<div class="info-block">
+								<div class="icon">
+									<img src="<?php echo get_stylesheet_directory_uri() ?>/images/map_icon.svg" width="40" height="40" alt="Calls" class="img-fluid">
+								</div>
+								<div class="text">
+									<p>Location</p>
+									<a href="#" alt="123 Street, Ahmadabad" title="123 Street, Ahmadabad">123 Street, Ahmadabad</a>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-   				<!-- Header-Upper -->
-        		<div class="header-upper" style="display: none;">
-        			<div class="container-fluid">
-            			<div class="clearfix home-menu">
-							<div class="pull-left logo-box">
-                    			<div class="logo"><?php
-									if ( !empty($logo_array) ) { ?>
-										<div class="site-logo">
-											<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-												<img src="<?php echo $logo_array[0]; ?>" alt="<?php echo $blog_info; ?>" title="<?php echo $blog_info; ?>" />
-											</a>
-										</div><?php
-									} else {
-										if ( ! empty( $blog_info ) ) {
-											if ( is_front_page() && is_home() ) { ?>
-												<h1 class="site-title">
-													<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-														<?php echo $blog_info; ?>
-													</a>
-												</h1><?php
-											} else { ?>
-												<p class="site-title">
-													<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-														<?php echo $blog_info; ?>
-													</a>
-												</p><?php
-											}
-										}
-									} ?>
-								</div>
-                    		</div>
-							<div class="nav-outer clearfix">
-								<!--Mobile Navigation Toggler For Mobile-->
-								<div class="mobile-nav-toggler">
-									<span class="icon flaticon-menu-4"></span>
-								</div>
-								<nav class="main-menu mega navbar-expand-md pull-right">
-									<div class="navbar-header">
-										<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-											<span class="icon-bar"></span>
-										</button>
-									</div>
-									<div class="navbar-collapse collapse scroll-nav clearfix" id="navbarSupportedContent">
-										<?php
-											wp_nav_menu(
-												array(
-													'theme_location' => 'primary-navigation',
-													'menu_class'     => 'primary-navigation navigation clearfix',
-													'items_wrap'     => '<ul id="%1$s" class="%2$s">%3$s</ul>',
-												)
-											);
-										?>
-									</div>
-								</nav>
-							</div>
-						</div>
+					
+					<!-- Center Section: Logo -->
+					<div class="col-md-4 text-center header_center_logo_section">
+						<a id="Paws_Universe_Logo" class="Paws_Universe_Logo" title="Paws Universe Logo" href="<?php echo site_url('/'); ?>">
+							<img src="<?php echo $globalHeader_LogoSection['url']; ?>" width="261" height="82" title="Paws Universe Logo"alt="Paws Universe Logo" class="img-fluid">
+						</a>
 					</div>
-				</div>
-		        <!-- End Header Upper -->
-
-				<!-- Sticky Header-->
-				<div class="sticky-header" style="display: none;">
-					<div class="container-fluid clearfix">
-						<!-- Mobile Logo-->
-						<div class="logo pull-left">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="img-responsive"><?php
-								if ( !empty($logo_array) ) { ?>
-									<img src="<?php echo $logo_array[0]; ?>" alt="<?php echo $blog_info; ?>" title="<?php echo $blog_info; ?>" /><?php
-								} else {
-									echo $blog_info;
-								} ?>
+					
+					<!-- Right Section: Emergency Button and Icons -->
+					<div class="col-md-4 text-md-end text-center global_header_right_section">
+						<a title="Emergency" alt="Emergency" href="#" class="btn btn-danger me-3 emergency_btn">
+							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/emegency_call.svg" width="20" height="20" title="Emergency" alt="Emergency" class="img-fluid"> Emergency
+						</a>
+						<div id="user_dashboard_icons" class="user_dashboard_icons">
+							<a href="#" class="fa_icons">
+								<img src="<?php echo get_stylesheet_directory_uri() ?>/images/icon_moon_cart.svg" width="25" height="25" alt="Calls" class="img-fluid">
+								<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">2</span>
+							</a>
+							<a href="#" class="fa_icons">
+								<img src="<?php echo get_stylesheet_directory_uri() ?>/images/icon_moon_heart.svg" width="25" height="25" alt="Calls" class="img-fluid">
+							</a>
+							<a href="#" class="fa_icons">
+								<img src="<?php echo get_stylesheet_directory_uri() ?>/images/icon_moon_profile.svg" width="25" height="25" alt="Calls" class="img-fluid">
 							</a>
 						</div>
-						<!-- Mobile Logo-->
-						<!-- Right Col-->
-						<div class="right-col pull-right">
-							<!-- Main Menu -->
-							<nav class="main-menu navbar-expand-md">
-								<div class="navbar-collapse collapse clearfix" id="navbarSupportedContent1">
-									<ul class="navigation clearfix"><!--Keep This Empty / Menu will come through Javascript--></ul>
-								</div>
-							</nav>
-							<!-- Main Menu End-->
-						</div>
-						<!-- Right Col-->
 					</div>
 				</div>
-				<!--End Sticky Header-->
+			</div>
+		</div>
 
-				<!-- Mobile Menu  -->
-				<div class="mobile-menu" style="display: none;">
-					<div class="menu-backdrop"></div>
-					<div class="close-btn"><span class="icon flaticon-cancel-1"></span></div>
-					<!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
-					<nav class="menu-box">
-						<div class="nav-logo">
-							<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="img-responsive"><?php
-								if ( !empty($logo_array) ) { ?>
-									<img src="<?php echo $logo_array[0]; ?>" alt="<?php echo $blog_info; ?>" title="<?php echo $blog_info; ?>" /><?php
-								} else {
-									echo $blog_info;
-								} ?>
-							</a>
-						</div>
-						<ul class="navigation clearfix"><!--Keep This Empty / Menu will come through Javascript--></ul>
-					</nav>
-				</div>
-				<!-- End Mobile Menu -->
-    		</header><!-- End Main Header -->
+		<!-- Navigation Section with Mega Menu -->
+		<div id="global_header_navigation_section" class="global_header_navigation_section">
+			<div class="container-fluid bg-danger">
+				<nav class="navbar navbar-expand-md navbar-dark">
+					<div class="container-fluid text-center justify-content-center">
+						<!-- Navbar Links -->
+						<?php
+							wp_nav_menu( array(
+								'theme_location'  => 'primary',
+								'menu'            => '2',
+								'container'       => 'ul',
+								'menu_class'      => 'navbar-nav mx-auto',
+								'menu_id'         => 'global_navigation_section',
+								'depth'           => 4,
+								'fallback_cb'     => false,
+								'walker'          => new Custom_Walker_Nav_Menu(), // Custom walker for more control
+							) );
+							
+						?>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+	</header>

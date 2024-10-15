@@ -574,4 +574,203 @@ function ah_breadcrumb() {
 	echo '</ul>';
   
 }
-  
+
+/**
+ * Animated Number Shortcode
+ * Usage: [animated_number target="50000" duration="3000"]
+ * designed by ETS I
+ */
+add_shortcode('animated_number', 'animated_number_shortcode');
+function animated_number_shortcode($atts) {
+    $atts = shortcode_atts(array(
+        'target' => 50000,
+        'duration' => 3000,
+    ), $atts);
+
+    $unique_id = 'animatedNumber_' . uniqid();
+
+    $formatted_target = number_format($atts['target']);
+
+    $output = '<span id="' . $unique_id . '">0</span>';
+    $output .= '<script>
+        jQuery(document).ready(function($) {
+            const targetNumber = ' . esc_js($atts['target']) . ';
+            const duration = ' . esc_js($atts['duration']) . ';
+
+            $({ count: 0 }).animate({ count: targetNumber }, {
+                duration: duration,
+                easing: "swing",
+                step: function(now) {
+                    $("#' . $unique_id . '").text(numberWithCommas(Math.floor(now)));
+                },
+                complete: function() {
+                    $("#' . $unique_id . '").text("' . $formatted_target . '");
+                }
+            });
+
+            function numberWithCommas(x) {
+                return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+        });
+    </script>';
+
+    return $output;
+}
+
+/**
+ * Product Grid Shortcode
+ * woocommerce: columns and posts per page
+ * default: 4 columns and 4 products
+ * Usage: [paws_product_grid columns="4" products="4"]
+ * designed by ETS I
+ */
+add_shortcode('paws_product_grid', 'custom_product_grid_shortcode_function');
+function custom_product_grid_shortcode_function($atts) {
+    $atts = shortcode_atts(array(
+        'columns'  => 4,
+        'products' => 8
+    ), $atts);
+    $args = array(
+        'post_type'      => 'product',
+        'posts_per_page' => $atts['products']
+    );
+    $products = new WP_Query($args);
+
+    ob_start();
+    if ($products->have_posts()) :
+        echo '<div class="paws-product-grid">';
+			while ($products->have_posts()) : $products->the_post();
+				global $product;
+				?>
+				<div class="product-item">
+					<?php if (has_post_thumbnail()) : ?>
+						<div class="product-image">
+							<?php the_post_thumbnail('woocommerce_thumbnail'); ?>
+						</div>
+					<?php endif; ?>
+					<div class="product-details">
+						<h3 class="product-title">
+							<a title="<?php the_title(); ?>" alt="<?php the_title(); ?>" href="<?php the_permalink(); ?>" class="product-title-url"><?php the_title(); ?></a>
+						</h3>
+						<div class="product-price"><?php echo $product->get_price_html(); ?></div>
+					</div>
+					<div class="product-description text-left"><?php echo wp_trim_words(get_the_excerpt(), 15); ?></div>
+					<a href="<?php the_permalink(); ?>" class="view-details">View Details →</a>
+				</div>
+				<?php
+			endwhile;
+        echo '</div>';
+    endif;
+    wp_reset_postdata();
+    return ob_get_clean();
+}
+
+/**
+ * Post  Featured Shortcode
+ * woocommerce: columns and posts per page
+ * default: 4 columns and 4 products
+ * Usage: [paws_featured_post columns="4" products="4"]
+ * designed by ETS I
+ */
+add_shortcode('paws_featured_post', 'paws_featured_post_shortcode_function');
+function paws_featured_post_shortcode_function($atts) {
+    $atts = shortcode_atts(array(
+        'columns'  => 1,
+        'posts' => 1,
+		'post__in' => '',
+    ), $atts);
+    $args = array(
+        'post_type'      => 'post',
+        'posts_per_page' => 1,
+		'category__in'   => 37,
+		'order'			 => 'ASC'
+    );
+    $products = new WP_Query($args);
+
+    ob_start();
+    if ($products->have_posts()) :
+        echo '<div class="paws-posts-grid">';
+			while ($products->have_posts()) : $products->the_post();
+				global $post; ?>
+
+				<div class="card">
+					<?php if (has_post_thumbnail()) : ?>
+						<div class="product-image">
+							<?php the_post_thumbnail('full'); ?>
+						</div>
+					<?php endif; ?>
+                    <div class="card-content">
+						<div class="date">
+							<span class="date-icon">
+								<img src="<?php echo get_stylesheet_directory_uri() ?>/images/uil_schedule.svg" width="18" height="18" alt="date" class="img-fluid">
+							</span>
+							<span><?php echo get_the_date(); ?></span>
+						</div>
+                        <div class="title">
+							<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
+								<?php echo get_the_title(); ?>
+							</a>
+						</div>
+                        <div class="description"><?php echo the_excerpt(); ?></div>
+                    </div>
+                </div>
+
+				<?php
+			endwhile;
+        echo '</div>';
+    endif;
+    wp_reset_postdata();
+    return ob_get_clean();
+}
+
+
+
+/**
+ * Post  Featured Shortcode
+ * woocommerce: columns and posts per page
+ * default: 4 columns and 4 products
+ * Usage: [paws_featured_post columns="4" products="4"]
+ * designed by ETS I
+ */
+add_shortcode('paws_featured_three_post', 'paws_featured_three_post_shortcode_function');
+function paws_featured_three_post_shortcode_function($atts) {
+    $args = array(
+        'post_type'      => 'post',
+        'posts_per_page' => 3,
+		'category__in'   => 37,
+		'order'			 => 'DESC'
+    );
+    $products = new WP_Query($args);
+
+    ob_start();
+    if ($products->have_posts()) :
+        echo '<div class="paws-posts-grid">';
+			while ($products->have_posts()) : $products->the_post();
+				global $post; ?>
+				<div class="card">
+					<?php if (has_post_thumbnail()) : ?>
+						<div class="product-image">
+							<?php the_post_thumbnail('full'); ?>
+						</div>
+					<?php endif; ?>
+                    <div class="card-content">
+						<div class="date">
+							<span class="date-icon">
+								<img src="<?php echo get_stylesheet_directory_uri() ?>/images/uil_schedule_blue.svg" width="18" height="18" alt="date" class="img-fluid">
+							</span>
+							<span><?php echo get_the_date(); ?></span>
+						</div>
+						<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
+							<?php echo get_the_title(); ?>
+						</a>
+                        <?php echo the_excerpt(); ?>
+                    </div>
+                </div>
+
+				<?php
+			endwhile;
+        echo '</div>';
+    endif;
+    wp_reset_postdata();
+    return ob_get_clean();
+}

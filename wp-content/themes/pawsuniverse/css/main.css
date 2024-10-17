@@ -277,7 +277,7 @@
 /* Make Swiper slider full width and full height */
 .swiper-container.video-slider {
     width: 100%;
-    height: 100vh; /* Full viewport height */
+    height: 80vh;
     position: relative;
 }
 
@@ -297,7 +297,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
 }
 
 .swiper-slide video {
@@ -306,7 +306,6 @@
     object-fit: cover;
 }
 
-/* Optional: Customize the navigation buttons */
 .swiper-button-next, .swiper-button-prev {
     color: var(--theme-white-color);
 }

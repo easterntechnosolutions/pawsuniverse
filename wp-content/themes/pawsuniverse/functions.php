@@ -109,9 +109,7 @@ remove_action( 'admin_print_scripts', 'print_emoji_detection_script', 7 );
  * Author: ETS I.
  */
 function my_acf_wysiwyg_remove_wpautop( $value, $post_id, $field ) {
-	if ( is_single('specialties') ) {
-    	remove_filter('acf_the_content', 'wpautop');
-	}
+	remove_filter('acf_the_content', 'wpautop');
     return $value;
 }
 add_filter('acf/format_value/type=wysiwyg', 'my_acf_wysiwyg_remove_wpautop', 10, 3);

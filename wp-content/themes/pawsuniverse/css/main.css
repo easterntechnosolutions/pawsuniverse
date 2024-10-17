@@ -188,10 +188,12 @@
     background-color: var(--primary-color) !important;
 }
 
-.global_header_navigation_section .container-fluid,
+.global_header_navigation_section > .container-fluid,
 .global_header_top_section .container-fluid {
     padding-right: var(--padlr-edge-container);
     padding-left: var(--padlr-edge-container);
+	padding-left: 15px;
+	padding-right: 15px;
 }
 
 .global-footer .before_footer_section {
@@ -264,6 +266,7 @@
 
 .global_header_navigation_section ul li a {
     padding: 5px 20px !important;
+    line-height: 40px !important;
 }
 
 .global_header_navigation_section ul li li {
@@ -271,7 +274,7 @@
 }
 
 .global_header_navigation_section ul li li a {
-
+	padding: 0px !important;
 }
 
 /* Make Swiper slider full width and full height */

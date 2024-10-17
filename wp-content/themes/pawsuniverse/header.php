@@ -82,9 +82,9 @@
 
 		<!-- Navigation Section with Mega Menu -->
 		<div id="global_header_navigation_section" class="global_header_navigation_section">
-			<div class="container-fluid bg-danger">
-				<nav class="navbar navbar-expand-md navbar-dark">
-					<div class="container-fluid text-center justify-content-center">
+			<!-- <div class="container-fluid bg-danger">-->
+				<nav class="paws-navbar navbar-expand-md navbar-dark">
+					<div class="container-fluid123 text-center justify-content-center">
 						<?php
 							wp_nav_menu( array(
 								'theme_location'  => 'primary-navigation',
@@ -101,7 +101,7 @@
 						?>
 					</div>
 				</nav>
-			</div>
+			<!--  </div>-->
 		</div>
 
 	</header>

@@ -43,7 +43,7 @@ function init_function() {
 	add_filter('script_loader_src', 'remove_wp_ver_css_js', 9999);
 
 	// Uncomment when need Custom Post Type for a webiste.
-	// require_once 'post-types/custom-post-type.php';
+	require_once 'post-types/custom-post-type.php';
 
 }
 
@@ -96,7 +96,7 @@ function enqueue_scripts_function() {
 /**
  * Remove Emoji Styles and JS.
  * Default Load by WordPress.
- * Author: ETS.
+ * Author: ETS I.
  */
 remove_action( 'wp_head', 'wp_resource_hints', 2, 99 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
@@ -104,8 +104,14 @@ remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'admin_print_styles', 'print_emoji_styles' );
 remove_action( 'admin_print_scripts', 'print_emoji_detection_script', 7 );
 
+/**
+ * Remvoe HTML or P Tag from ACF Pages.
+ * Author: ETS I.
+ */
 function my_acf_wysiwyg_remove_wpautop( $value, $post_id, $field ) {
-    remove_filter('acf_the_content', 'wpautop');
+	if ( is_single('specialties') ) {
+    	remove_filter('acf_the_content', 'wpautop');
+	}
     return $value;
 }
 add_filter('acf/format_value/type=wysiwyg', 'my_acf_wysiwyg_remove_wpautop', 10, 3);
@@ -723,8 +729,6 @@ function paws_featured_post_shortcode_function($atts) {
     return ob_get_clean();
 }
 
-
-
 /**
  * Post  Featured Shortcode
  * woocommerce: columns and posts per page
@@ -772,5 +776,146 @@ function paws_featured_three_post_shortcode_function($atts) {
         echo '</div>';
     endif;
     wp_reset_postdata();
+    return ob_get_clean();
+}
+
+/**
+ * Post  Team Members Shortcode
+ * woocommerce: 3 columns and 9 posts per page
+ * default: 4 columns and All Team Members
+ * Usage: [paws_teams]
+ * designed by ETS I
+ */
+add_shortcode('paws_teams', 'paws_team_memers_grid_shortcode_function');
+function paws_team_memers_grid_shortcode_function($atts) {
+	ob_start(); ?>
+	<div class="paws-teams-memebers-section" id="paws-teams-memebers-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 mission-vission-section">
+					<h3>Our Team</h3>
+				</div>
+				<div class="row mb-5">
+					<?php
+					$args = array(
+						'post_type'      => 'team_members',
+						'posts_per_page' => -1,
+						'orderby'        => 'title',
+						'order'          => 'ASC',
+						'post_status'    => 'publish'
+					);
+					$team_query = new WP_Query( $args );
+					if ( $team_query->have_posts() ) :
+						while ( $team_query->have_posts() ) : $team_query->the_post();
+							?>
+							<div class="col-md-4 team-member">
+								<div class="team-member-card">
+									<?php if ( has_post_thumbnail() ) : ?>
+										<div class="team-member-image">
+											<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
+												<?php the_post_thumbnail( 'full' ); ?>
+											</a>
+										</div>
+									<?php endif; ?>
+									<h4>
+									<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
+										<?php echo get_the_title(); ?>
+									</a>
+									</h4>
+									<?php the_excerpt(); ?>
+								</div>
+							</div>
+						<?php endwhile;
+						wp_reset_postdata();
+					endif;
+					?>
+				</div>
+			</div>
+		</div>
+	</div><?php
+	wp_reset_postdata();
+    return ob_get_clean();
+}
+
+/**
+ * Shortcode  specialties Grid Shortcode
+  * default: 4 columns and 4 products
+ * Usage: [specialties]
+ * designed by ETS I
+ */add_shortcode('specialties', 'specialties_shortcode');
+function specialties_shortcode($atts) {
+    $atts = shortcode_atts(
+        array(
+            'category' => '',
+        ),
+        $atts,
+        'specialties'
+    );
+	$term = get_term_by('slug', $atts['category'], 'specialty_category');
+    $category_name = $term ? $term->name : '';
+
+	$paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+    $args = array(
+        'post_type'      => 'specialties',
+        'posts_per_page' => -1,
+		'post_status'    => 'publish',
+		'paged'          => $paged,
+		'order'          => 'ASC',
+        'tax_query'      => array(
+								array(
+									'taxonomy' => 'specialty_category',
+									'field'    => 'slug',
+									'terms'    => $atts['category'],
+								),
+        				),
+    );
+    $query = new WP_Query($args);
+
+    ob_start();
+
+    if ($query->have_posts()) {
+        echo '<div id="veterinary-section-'.$atts['category'].'" class="specialties-section veterinary-section veterinary-section-'.$atts['category'].'"><div class="container"><div class="row">';
+
+		echo '<h3 class="text-danger specialties_tax_name">' . esc_html($category_name) . '</h3>';
+        while ($query->have_posts()) {
+            $query->the_post();
+			$specialties_icon = get_field('specialties_icon');
+            $image_url = $specialties_icon['url']; ?>
+			<div class="col-12 col-md-6 col-lg-3">
+                <div class="service-card">
+					<?php if ($specialties_icon) : ?>
+                        <img class="img-fluid" src="<?php echo esc_url($image_url); ?>" alt="<?php the_title(); ?>">
+                    <?php endif; ?>
+                    <div class="card-body">
+                        <h3 class="card-title">
+							<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
+								<?php the_title(); ?>
+							</a>
+						</h3>
+                        <?php echo get_the_excerpt(); ?>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+
+        echo '</div></div></div>';
+    } else { ?>
+        <div class="no-content-found-section" id="no-content-found-section">
+			<div class="container">
+				<div class="row mt-3 mb-3">
+					<div class="col-12">
+						<h3>No specialties found in this category.</h3>
+					</div>
+
+				</div>
+			</div>
+		</div><?php
+    }
+
+    // Reset post data
+    wp_reset_postdata();
+
+    // Return the buffered content
     return ob_get_clean();
 }

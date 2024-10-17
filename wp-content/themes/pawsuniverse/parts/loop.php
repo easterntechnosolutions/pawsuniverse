@@ -16,13 +16,31 @@ if (have_posts()) {
 				<div class="auto-container"><?php
 					if( '' !== get_post()->post_content ) {
 						the_content();
-					} else {
-						echo "<h5 style='font-weight: bold'>No Contents Found.</h5>";
+					} else { ?>
+						<div class="no-content-found-section" id="no-content-found-section">
+							<div class="container">
+								<div class="row mt-5 mb-5">
+									<div class="col-12">
+										<h3>No Contents Founds.</h3>
+									</div>
+					
+								</div>
+							</div>
+						</div><?php
 					} ?>
 				</div>
 			</div><?php
 		}
 	endwhile;
-} else {
-	echo "<h3>No Contents Found.</h3>";
+} else { ?>
+	<div class="no-content-found-section" id="no-content-found-section">
+		<div class="container">
+			<div class="row mt-3 mb-3">
+				<div class="col-12">
+					<h3>No Contents Found.</h3>
+				</div>
+
+			</div>
+		</div>
+	</div><?php
 } ?>

@@ -11,6 +11,7 @@
     --heading-color: #000000;
 
     --theme-blue-color: #074793;
+    --theme-gray-color: #505050;
     --theme-white-color: #ffffff;
 
     --theme-lightwhite-bg-color: #FEF5EA; 
@@ -21,7 +22,7 @@
     --Playfair-font: "Playfair Display", serif;
 
     --font-body-size: 14px;
-    --font-size-h1: 40px;
+    --font-size-h1: 50px;
 	--font-size-h2: 36px;
 	--font-size-h3: 30px;
 	--font-size-h4: 25px;
@@ -358,7 +359,7 @@
 	text-align: center;
 	background-color: transparent;
 	border: none;
-	color: #505050;
+	color: var(--theme-gray-color);
 	font-family: var(--body-font);
 	font-size: 14px;
 	line-height: var(--font-line-height);
@@ -432,7 +433,7 @@
 }
 
 .image-container .text-bubble {
-	background: url("http://localhost/pawsuniverse/wp-content/uploads/2024/10/our-story-kizer.svg") no-repeat center center;
+	background: url("../images/our-story-kizer.svg") no-repeat center center;
 	background-size: contain;
 	padding: 10px;
 	position: absolute;
@@ -452,7 +453,7 @@
 
 .image-container .text-bubble p.subtitle {
     margin: 0;
-    color: #505050;
+    color: var(--theme-gray-color);
 	font-family: var(--body-font);
 	font-size: 12px;
 	line-height: var(--font-line-height);
@@ -478,7 +479,7 @@
 
 .our-story-section p {
 	margin-bottom: 30px;
-	color: #505050;
+	color: var(--theme-gray-color);
 	font-size: 16px;
 	line-height: var(--font-line-height);
 	font-family: var(--body-font);
@@ -517,7 +518,7 @@
 .veterinary-section .service-card {
 	width: 100%;
 	padding: 20px;
-	background-color: #074793;
+	background-color: var(--theme-blue-color);
 	min-height: 275px;
 	border-radius: 22px;
 	color: var(--theme-white-color);
@@ -536,10 +537,23 @@
 	margin-bottom: 30px;
 }
 
+.veterinary-section .service-card h3 a,
 .veterinary-section .service-card h3 {
     font-size: 19px;
     line-height: 24px;
     font-weight: 500;
+	color: var(--theme-white-color);
+	text-decoration: none;
+}
+
+.veterinary-section .service-card:hover h3 a {
+	text-decoration: underline;
+}
+
+.veterinary-section .specialties_tax_name {
+	text-transform: uppercase;
+	font-weight: var(--font-weight);
+	margin: 0px 0 40px;
 }
 
 .veterinary-btn-section {
@@ -663,7 +677,6 @@
 	align-items: center;
 	text-align: center;
 	border-radius: 35px;
-	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .why-choose-us-right-section .stats-box h2 {
@@ -882,7 +895,7 @@
 }
 
 .save_life_section .hero-section p {
-    color: #505050;
+    color: var(--theme-gray-color);
 }
 
 .save_life_section .hero-stats {
@@ -892,7 +905,7 @@
 }
 
 .save_life_section .hero-stats .hero-stats-content .hero-stats-text {
-	color: #505050;
+	color: var(--theme-gray-color);
 	font-family: var(--body-font);
 	line-height: var(--font-line-height);
 	font-size: var(--font-body-size);
@@ -1101,21 +1114,21 @@
 
 .self-care-pets-section .self-care-pets-right-section .card {
 	background-color: var(--theme-white-color);
-	border-radius: 10px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	border-radius: 22px;
 	width: 100%;
 	overflow: hidden;
 	display: flex;
 	flex-direction: row;
 	padding: 20px;
 	margin-bottom: 10px;
+	border: none;
 }
 
 .self-care-pets-section .self-care-pets-right-section .card .product-image img {
 	width: 130px;
 	height: 130px;
 	object-fit: cover;
-	border-radius: 10px 0 0 10px;
+	border-radius: 10px;
 }
 
 .self-care-pets-section .self-care-pets-right-section .card-content {
@@ -1130,14 +1143,236 @@
 
 .self-care-pets-section .self-care-pets-right-section .card-content a {
 	font-size: 16px !important;
-	margin: 0;
+	margin-bottom: 15px;
 	color: #031B4E;
 	line-height: 18px !important;
 	text-decoration: none;
+	display: block;
+	font-weight: var(--font-weight);
+}
+
+.self-care-pets-section .self-care-pets-right-section .card:hover  .card-content a {
+	text-decoration: underline;
 }
 
 .self-care-pets-section .self-care-pets-right-section .card-content p {
 	font-size: 14px;
 	color: #424242;
 	margin: 0;
+}
+
+
+.hero-section {
+	display: flex;
+	padding: 326px 0 0;
+	flex-direction: column;
+	overflow: hidden;
+	font-family: var(--body-font);
+	color: var(--theme-white-color);
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.hero-section .hero-inner-section {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	overflow: hidden;
+	align-items: center;
+	padding: 26px 80px 80px;
+}
+
+.hero-section .hero-wrapper {
+	display: flex;
+	width: 100%;
+	max-width: 1484px;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.hero-section .hero-header {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	gap: 40px 550px;
+	justify-content: flex-start;
+}
+
+.hero-section .hero-title {
+	font-family: var(--body-font);
+	color: var(--theme-white-color);
+}
+
+.hero-section .hero-subtitle {
+	font-size: var(--font-size-h3);
+	font-weight: 400;
+	line-height: var(--font-line-height);
+	align-self: stretch;
+	width: 527px;
+	margin: auto 0;
+	text-transform: capitalize;
+	margin: auto 0;
+	font-family: var(--body-font);
+	color: var(--theme-white-color);
+}
+
+@media (max-width: 991px) {
+
+	.hero-section {
+		padding-top: 100px;
+	}
+
+	.hero-section .hero-inner-section {
+		max-width: 100%;
+		padding: 0 20px;
+	}
+
+	.hero-section .hero-wrapper {
+		max-width: 100%;
+	}
+
+	.hero-section .hero-header {
+		max-width: 100%;
+	}
+
+	.hero-section .hero-title {
+		max-width: 100%;
+		font-size: 40px;
+	}
+
+	.hero-section .hero-subtitle {
+		max-width: 100%;
+	}
+}
+
+.our-story-section.lossof_fur_kid .image-container {
+	position: relative;
+	max-width: 480px;
+	margin: 0 auto;
+}
+
+.our-inspired-section h2 {
+	font-size: var(--font-size-h2);
+	font-weight: var(--font-weight);
+	margin-bottom: 30px;
+}
+
+.our-inspired-section .mission-vission-section {
+	clear: both;
+	width: 100%;
+	display: block;
+	padding-top: 20px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+	padding-bottom: 20px;
+}
+
+.paws-teams-memebers-section .mission-vission-section h3,
+.our-inspired-section .mission-vission-section h3 {
+	color: var(--theme-blue-color);
+	font-weight: 500;
+	font-size: 22px;
+	margin-bottom: 20px;
+}
+
+.our-inspired-section .mission-vission-section p {
+	color: var(--theme-gray-color);
+	text-transform: capitalize;
+	font-size: 16px;
+	margin-bottom: 20px;
+	font-weight: 400;
+}
+
+.our-inspired-section .mission-vission-section p.value-section-heading {
+	font-weight: var(--font-weight);
+	margin-bottom: 0;
+}
+
+.paws-teams-memebers-section .team-member {
+	margin-bottom: 0;
+	margin-top: 30px;
+}
+
+.paws-teams-memebers-section .team-member-card h4 a {
+	text-decoration: none;
+	color: var(--theme-gray-color);
+	font-family: var(--body-font);
+	font-size: var(--font-body-size);
+	font-weight: var(--font-weight);
+	line-height: var(--font-line-height);
+	text-transform: uppercase;
+}
+.paws-teams-memebers-section .team-member-card:hover h4 a {
+	text-decoration: underline;
+}
+
+.paws-teams-memebers-section .team-member-card p {
+    color: #AAAAAA;
+	font-family: var(--body-font);
+	font-size: var(--font-body-size);
+	font-weight: var(--font-weight);
+	line-height: var(--font-line-height);
+	text-transform: capitalize;
+}
+
+.paws-teams-memebers-section .team-member-image img {
+    border-radius: 20px;
+    max-width: 100%;
+    height: auto;
+}
+
+.single-speciality-section {
+	margin: 40px auto;
+	padding: 0;
+	width: 100%;
+}
+
+.single-speciality-section .content_specialist_lists {
+	clear: both;
+	display: block;
+	margin: 0 auto;
+	padding: 30px 0;
+	width: 100%;
+	border-bottom: 1px solid #FEF5EA;
+}
+
+.single-speciality-left-section .specialities_page_title {
+	color: var(--primary-color);
+	font-family: var(--body-font);
+	font-size: var(--font-size-h2);
+	font-weight: var(--font-weight);
+	line-height: var(--font-line-height);
+	text-transform: uppercase;
+}
+
+.single-speciality-left-section .specialities_left_subtitle {
+	font-family: var(--body-font);
+	font-size: 16px;
+	line-height: var(--font-line-height);
+	display: block;
+	max-width: 400px;
+}
+
+.single-specialties .hero-section .hero-subtitle {
+
+}
+
+.single-specialties .hero-section .hero-title {
+
+}
+
+.specialities_title_leg_section {
+	position: relative;
+}
+
+.specialities_title_leg_section .paws-leg {
+	width: 50px;
+	height: 50px;
+	transform: rotate(31.444deg);
+	position: absolute;
+	left: 200px;
+	top: -30px;
+}
+
+.specialities_title_leg_section .paws-leg.leg-two {
+	left: 250px;
 }

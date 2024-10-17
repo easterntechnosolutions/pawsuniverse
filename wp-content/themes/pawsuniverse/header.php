@@ -85,19 +85,19 @@
 			<div class="container-fluid bg-danger">
 				<nav class="navbar navbar-expand-md navbar-dark">
 					<div class="container-fluid text-center justify-content-center">
-						<!-- Navbar Links -->
 						<?php
 							wp_nav_menu( array(
-								'theme_location'  => 'primary',
+								'theme_location'  => 'primary-navigation',
 								'menu'            => '2',
-								'container'       => 'ul',
+								'container'       => 'div',
+								'container_class' => 'collapse navbar-collapse',
 								'menu_class'      => 'navbar-nav mx-auto',
 								'menu_id'         => 'global_navigation_section',
 								'depth'           => 4,
 								'fallback_cb'     => false,
-								'walker'          => new Custom_Walker_Nav_Menu(), // Custom walker for more control
+								'add_li_class'    => 'nav-item',
+								'link_class'      => 'nav-link text-white',
 							) );
-							
 						?>
 					</div>
 				</nav>

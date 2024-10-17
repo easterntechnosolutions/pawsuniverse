@@ -49,7 +49,7 @@ if (have_posts()) {
             endwhile;
         } else { ?>
             <div class="page_contents_section about-section">
-                <div class="auto-container"><?php
+                <div class="container"><?php
                     if (get_the_content()) {
                         the_content();
                     } else {

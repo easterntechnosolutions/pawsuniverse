@@ -1,11 +1,11 @@
 <?php   
 	get_header();
-	get_template_part('parts/page-title');
+	//get_template_part('parts/page-title');
 ?>
 
 <!-- blog-classic -->
 <div class="sidebar-page-container">
-    <div class="auto-container"> 
+    <div class="container"> 
         <div class="row clearfix">
             <div style="visibility: visible;" class="content-side col-lg-8 col-md-8 col-sm-12 col-xs-12 wow slideInLeft animated animated animated">
                 <?php 
@@ -58,7 +58,7 @@
 					}
 				?>
             </div>
-            <div style="visibility: visible;" class="sidebar-side col-lg-4 col-md-4 col-sm-12 col-xs-12 wow slideInRight animated animated animated">
+            <div style="visibility: visible;" class="sidebar-side col-lg-4 col-md-4 col-sm-12 col-xs-12 wow slideInRight animated">
                 <aside class="sidebar">
                     <div class="sidebar-widget popular-posts">
                         <div class="sidebar-title">
@@ -80,7 +80,7 @@
                                     <figure class="post-thumb">
                                         <a title="<?php the_title(); ?>" href="<?php the_permalink(); ?>">
                                             <?php
-                                                the_post_thumbnail('medium_large');
+                                                the_post_thumbnail('thumbnail');
                                             ?>
                                         </a>
                                     </figure>

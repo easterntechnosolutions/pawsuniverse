@@ -1,8 +1,8 @@
 <?php get_header(); ?>
 
-<section class="swiper-container video-slider">
-    <div class="swiper-wrapper">
-        <div class="swiper-slide">
+<section class="swiper-container-section video-slider">
+    <div class="swiper-wrapper-section">
+        <div class="swiper-slide-section">
             <video class="home_video" id="home_video" autoplay muted loop playsinline>
                 <source src="<?php echo get_field('video_url'); ?>" type="video/mp4">
                 Your browser does not support the video tag.
@@ -53,14 +53,14 @@ if (have_posts()) {
                     if (get_the_content()) {
                         the_content();
                     } else {
-                        echo "<h5 style='font-weight: bold'>" . esc_html__('No Contents Found.', 'text-domain') . "</h5>";
+                        echo "<h5 style='font-weight: bold'>" . esc_html__('No Contents Found.', 'pawsuniverse') . "</h5>";
                     } ?>
                 </div>
             </div><?php
         }
     endwhile;
 } else {
-    echo "<h3>" . esc_html__('No Contents Found.', 'text-domain') . "</h3>";
+    echo "<h3>" . esc_html__('No Contents Found.', 'pawsuniverse') . "</h3>";
 } ?>
 
 <?php get_footer();

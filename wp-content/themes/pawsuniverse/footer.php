@@ -1,6 +1,11 @@
 
 		<?php wp_footer();
-		$globalFooter_full_width_image    = get_field( 'full_width_image', 'options' );
+		$pagewise_Footer_full_width_image = get_field( 'footer_full_width_image', $post->ID );
+		if ( $pagewise_Footer_full_width_image ) {
+		    $globalFooter_full_width_image = $pagewise_Footer_full_width_image;
+		} else {
+		    $globalFooter_full_width_image = get_field( 'full_width_image', 'options' );
+		}
 		$globalFooter_enquiry_number      = get_field( 'enquiry_number', 'options' );
 		$globalFooter_LogoSection         = get_field( 'footer_logo', 'options' ); 
 		$globalFooter_location            = get_field( 'location', 'options' ); 
@@ -20,7 +25,9 @@
 					<div class="row text-center text-md-start">
 						<!-- Logo and Social Icon Section -->
 						<div class="col-md-3 mb-4 footer-logo">
-							<img src="<?php echo $globalFooter_LogoSection['url']; ?>" width="355" height="111" alt="Paws Universe Logo" class="img-fluid">
+							<a id="Paws_Universe_Logo" class="Paws_Universe_Logo" title="Paws Universe Logo" href="<?php echo site_url('/'); ?>">
+							    <img src="<?php echo $globalFooter_LogoSection['url']; ?>" width="355" height="111" alt="Paws Universe Logo" class="img-fluid">
+						    </a>
 							<p>The Ideal Pet Hospital Combining Advanced Veterinary Medicine with Personalized Care to Ensure Your Pet’s Optimal Health.</p>
 							<div id="footer-social-icons" class="footer-social-icons"><?php
 								if( have_rows('social_media_icons', 'options' ) ) {
@@ -115,7 +122,7 @@
 						</div>
 
 						<!-- Get In Touch Section -->
-						<div class="col-md-2 mb-4">
+						<div class="col-md-2 mb-4 get_in_touch_footer_section">
 							<h6>Get In Touch</h6>
 							<ul class="contact-info list-unstyled">
 								<li>

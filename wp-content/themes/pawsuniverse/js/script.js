@@ -22,7 +22,7 @@ jQuery(document).ready(function($) {
         loopAdditionalSlides: 1,
         effect: 'slide', // Optional: You can also try 'fade' effect
         autoplay: {
-            delay: 2000,
+            delay: 7000,
             disableOnInteraction: true,
         },
         pagination: {
@@ -34,13 +34,21 @@ jQuery(document).ready(function($) {
             prevEl: '.swiper-button-prev',
         },
         breakpoints: {
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 0,
+            },
+            480: {
+                slidesPerView: 1,
+                spaceBetween: 0,
+            },
             640: {
-                slidesPerView: 2,
-                spaceBetween: 10,
+                slidesPerView: 1,
+                spaceBetween: 0,
             },
             768: {
-                slidesPerView: 3,
-                spaceBetween: 20,
+                slidesPerView: 1,
+                spaceBetween: 0,
             },
             1024: {
                 slidesPerView: 4,

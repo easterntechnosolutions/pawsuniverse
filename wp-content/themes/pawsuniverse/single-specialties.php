@@ -61,7 +61,7 @@ if ( $hero_section_left_title ) {
 		<div class="container">
 			<div class="row">
 				<?php if (have_posts()) { ?>
-					<div class="post-item single-speciality-left-section col-lg-6 col-md-6 col-sm-12">
+					<div class="post-item single-speciality-left-section col-12 col-md-12 col-lg-6 col-xl-6">
 						<div class="specialities_title_leg_section">
 							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/paw-legs.svg" width="50" height="50" alt="Paw" class="img-fluid paws-leg leg-one">
 							<img src="<?php echo get_stylesheet_directory_uri() ?>/images/paw-legs.svg" width="50" height="50" alt="Paw" class="img-fluid paws-leg leg-two">
@@ -69,7 +69,7 @@ if ( $hero_section_left_title ) {
 						</div>
 						<div class="specialities_left_subtitle"><?php echo $left_sub_title; ?></div>
 					</div>
-					<div class="post-item single-speciality-right-section col-lg-6 col-md-6 col-sm-12">
+					<div class="post-item single-speciality-right-section col-12 col-md-12 col-lg-6 col-xl-6">
 						<?php
 							$count = 1;
 							if( have_rows('content_blocks', $post->ID) ) {

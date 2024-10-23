@@ -127,7 +127,7 @@ function add_js_footer_function() {
 		// wp_enqueue_script( 'gmaps', get_stylesheet_directory_uri() . '/js/gmaps.js' );
 		// wp_enqueue_script( 'script', get_stylesheet_directory_uri() . '/js/script.js' );
 
-		wp_enqueue_style ( 'font-awesome', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
+		// wp_enqueue_style ( 'font-awesome', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' );
 		wp_enqueue_script( 'scriptjs', get_stylesheet_directory_uri() . '/js/script.js' );
 	}
 }
@@ -622,6 +622,31 @@ function animated_number_shortcode($atts) {
 }
 
 /**
+ * Post  social_media_iconsShortcode
+ * Usage: [social_media_icons]
+ * designed by ETS I
+ */
+add_shortcode('social_media_icons', 'paws_social_media_icons_shortcode_function');
+function paws_social_media_icons_shortcode_function( $atts ) {
+    ob_start(); ?>
+	<div class="followus_text">Follow us</div>
+	<div id="footer-social-icons" class="footer-social-icons" style="margin-left: 5px;"><?php
+		if( have_rows('social_media_icons', 'options' ) ) {
+			while( have_rows('social_media_icons', 'options' ) ) : the_row();
+				$social_media_image = get_sub_field('social_media_image', 'options' );
+				$social_media_url   = get_sub_field('social_media_url', 'options' ); ?>
+				<a target="_blank" alt="<?php echo $social_media_url; ?>" href="<?php echo $social_media_url; ?>">
+					<img src="<?php echo $social_media_image['url']; ?>" width="40.50" height="40.50" alt="<?php echo $social_media_url; ?>" class="img-fluid">
+				</a><?php
+			endwhile;
+		} ?>
+	</div>
+	<?php
+    wp_reset_postdata();
+    return ob_get_clean();
+}
+
+/**
  * Product Grid Shortcode
  * woocommerce: columns and posts per page
  * default: 4 columns and 4 products
@@ -645,7 +670,8 @@ function custom_product_grid_shortcode_function($atts) {
         echo '<div class="paws-product-grid">';
 			while ($products->have_posts()) : $products->the_post();
 				global $product;
-				?>
+				$paws_page_title     = get_the_title();
+				$paws_page_permalink = get_the_permalink(); ?>
 				<div class="product-item">
 					<?php if (has_post_thumbnail()) : ?>
 						<div class="product-image">
@@ -654,12 +680,18 @@ function custom_product_grid_shortcode_function($atts) {
 					<?php endif; ?>
 					<div class="product-details">
 						<h3 class="product-title">
-							<a title="<?php the_title(); ?>" alt="<?php the_title(); ?>" href="<?php the_permalink(); ?>" class="product-title-url"><?php the_title(); ?></a>
+							<a title="<?php echo $paws_page_title; ?>" alt="<?php echo $paws_page_title; ?>" href="<?php echo $paws_page_permalink; ?>" class="product-title-url">
+							    <?php echo $paws_page_title; ?>
+						    </a>
 						</h3>
-						<div class="product-price"><?php echo $product->get_price_html(); ?></div>
+						<div class="product-price">
+						    <?php echo $product->get_price_html(); ?>
+					    </div>
 					</div>
-					<div class="product-description text-left"><?php echo wp_trim_words(get_the_excerpt(), 15); ?></div>
-					<a href="<?php the_permalink(); ?>" class="view-details">View Details →</a>
+					<div class="product-description text-left">
+					    <?php echo wp_trim_words(get_the_excerpt(), 15); ?>
+				    </div>
+					<a href="<?php echo $paws_page_permalink; ?>" class="view-details">View Details →</a>
 				</div>
 				<?php
 			endwhile;
@@ -695,7 +727,9 @@ function paws_featured_post_shortcode_function($atts) {
     if ($products->have_posts()) :
         echo '<div class="paws-posts-grid">';
 			while ($products->have_posts()) : $products->the_post();
-				global $post; ?>
+				global $post;
+				$paws_page_title     = get_the_title();
+				$paws_page_permalink = get_the_permalink(); ?>
 
 				<div class="card">
 					<?php if (has_post_thumbnail()) : ?>
@@ -711,8 +745,8 @@ function paws_featured_post_shortcode_function($atts) {
 							<span><?php echo get_the_date(); ?></span>
 						</div>
                         <div class="title">
-							<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
-								<?php echo get_the_title(); ?>
+							<a href="<?php echo $paws_page_permalink; ?>" class="view-details" title="<?php echo $paws_page_title; ?>" alt="<?php echo $paws_page_title; ?>">
+								<?php echo $paws_page_title; ?>
 							</a>
 						</div>
                         <div class="description"><?php echo the_excerpt(); ?></div>
@@ -748,7 +782,9 @@ function paws_featured_three_post_shortcode_function($atts) {
     if ($products->have_posts()) :
         echo '<div class="paws-posts-grid">';
 			while ($products->have_posts()) : $products->the_post();
-				global $post; ?>
+				global $post;
+				$paws_page_title     = get_the_title();
+				$paws_page_permalink = get_the_permalink(); ?>
 				<div class="card">
 					<?php if (has_post_thumbnail()) : ?>
 						<div class="product-image">
@@ -762,8 +798,8 @@ function paws_featured_three_post_shortcode_function($atts) {
 							</span>
 							<span><?php echo get_the_date(); ?></span>
 						</div>
-						<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
-							<?php echo get_the_title(); ?>
+						<a href="<?php echo $paws_page_permalink; ?>" class="view-details" title="<?php echo $paws_page_title; ?>" alt="<?php echo $paws_page_title; ?>">
+							<?php echo $paws_page_title; ?>
 						</a>
                         <?php echo the_excerpt(); ?>
                     </div>
@@ -793,41 +829,41 @@ function paws_team_memers_grid_shortcode_function($atts) {
 				<div class="col-12 mission-vission-section">
 					<h3>Our Team</h3>
 				</div>
-				<div class="row mb-5">
-					<?php
-					$args = array(
-						'post_type'      => 'team_members',
-						'posts_per_page' => -1,
-						'orderby'        => 'title',
-						'order'          => 'ASC',
-						'post_status'    => 'publish'
-					);
-					$team_query = new WP_Query( $args );
-					if ( $team_query->have_posts() ) :
-						while ( $team_query->have_posts() ) : $team_query->the_post();
-							?>
-							<div class="col-md-4 team-member">
-								<div class="team-member-card">
-									<?php if ( has_post_thumbnail() ) : ?>
-										<div class="team-member-image">
-											<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
-												<?php the_post_thumbnail( 'full' ); ?>
-											</a>
-										</div>
-									<?php endif; ?>
-									<h4>
-									<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
-										<?php echo get_the_title(); ?>
-									</a>
-									</h4>
-									<?php the_excerpt(); ?>
-								</div>
+			</div>
+			<div class="row mb-5"><?php
+				$args = array(
+					'post_type'      => 'team_members',
+					'posts_per_page' => -1,
+					'orderby'        => 'title',
+					'order'          => 'ASC',
+					'post_status'    => 'publish'
+				);
+				$team_query = new WP_Query( $args );
+				if ( $team_query->have_posts() ) :
+					while ( $team_query->have_posts() ) : $team_query->the_post();
+					    global $post;
+        				$paws_page_title     = get_the_title();
+        				$paws_page_permalink = get_the_permalink(); ?>
+						<div class="col-12 col-md-12 col-lg-3 col-xl-3 team-member">
+							<div class="team-member-card">
+								<?php if ( has_post_thumbnail() ) : ?>
+									<div class="team-member-image">
+										<a href="<?php echo $paws_page_permalink; ?>" class="view-details" title="<?php echo $paws_page_title; ?>" alt="<?php echo $paws_page_title; ?>">
+											<?php the_post_thumbnail( 'full' ); ?>
+										</a>
+									</div>
+								<?php endif; ?>
+								<h4>
+								<a href="<?php echo $paws_page_permalink; ?>" class="view-details" title="<?php echo $paws_page_title; ?>" alt="<?php echo $paws_page_title; ?>">
+									<?php echo $paws_page_title; ?>
+								</a>
+								</h4>
+								<?php the_excerpt(); ?>
 							</div>
-						<?php endwhile;
-						wp_reset_postdata();
-					endif;
-					?>
-				</div>
+						</div>
+					<?php endwhile;
+					wp_reset_postdata();
+				endif; ?>
 			</div>
 		</div>
 	</div><?php
@@ -837,8 +873,81 @@ function paws_team_memers_grid_shortcode_function($atts) {
 
 /**
  * Shortcode  specialties Grid Shortcode
-  * default: 4 columns and 4 products
+  * default: 4 columns and N specialties
  * Usage: [specialties]
+ * designed by ETS I
+ */add_shortcode('specialties_list', 'all_specialties_shortcode_function');
+function all_specialties_shortcode_function($atts) {
+    $args = array(
+		'post_type'      => 'specialties',
+		'posts_per_page' => -1,
+		'post_status'    => 'publish',
+		'paged'          => $paged,
+		'order'          => 'ASC',
+	);
+    $query = new WP_Query($args);
+
+    ob_start(); ?>
+        <div class="container" style="position: relative;">
+            <div class="veterinary-swiper-container swiper-container">
+                <div class="swiper-wrapper"><?php
+                    if ($query->have_posts()) {
+                        while ($query->have_posts()) {
+                            global $post;
+                            $query->the_post();
+            				$paws_page_title     = get_the_title();
+            				$paws_page_permalink = get_the_permalink();
+                			$specialties_icon    = get_field('specialties_icon');
+                            $image_url           = $specialties_icon['url']; ?>
+                            <div class="swiper-slide">
+                                <div class="service-card">
+                                    <?php if ($specialties_icon) : ?>
+                                        <img width="149" height="149" class="img-fluid" src="<?php echo esc_url($image_url); ?>" alt="<?php the_title(); ?>">
+                                    <?php endif; ?>
+                                    <h3 class="card-title">
+            							<a href="<?php echo $paws_page_permalink; ?>" class="view-details" title="<?php echo $paws_page_title; ?>" alt="<?php echo $paws_page_title; ?>">
+            								<?php echo $paws_page_title; ?>
+            							</a>
+            						</h3>
+                                    <?php the_excerpt(); ?>
+                                </div>
+                            </div><?php
+                        }
+                    } else { ?>
+                		<div class="no-content-found-section" id="no-content-found-section">
+                			<div class="container">
+                				<div class="row mt-3 mb-3">
+                					<div class="col-12">
+                						<h3>No specialties founds.</h3>
+                					</div>
+                
+                				</div>
+                			</div>
+                		</div><?php
+                	} ?>
+                </div>
+            </div>
+                <div id="paws_swiper_slider_arrows" class="paws_swiper_slider_arrows">
+                    <div class="swiper-button-next veterinary-swiper-button-next">
+                        <img src="<?php echo get_stylesheet_directory_uri() ?>/images/slider-arrow.webp" width="70" height="71" alt="next" class="img-fluid">
+                    </div>
+                    <div class="swiper-button-prev veterinary-swiper-button-prev">
+                        <img src="<?php echo get_stylesheet_directory_uri() ?>/images/slider-arrow.webp" width="70" height="71" alt="prev" class="img-fluid">
+                    </div>
+                    <!-- <div class="swiper-pagination"></div> -->
+                </div>
+        </div><?php
+    // Reset post data
+    wp_reset_postdata();
+
+    // Return the buffered content
+    return ob_get_clean();
+}
+
+/**
+ * Shortcode  specialties Grid Shortcode
+  * default: 4 columns and 4 products
+ * Usage: [specialties category="essential-care"]
  * designed by ETS I
  */add_shortcode('specialties', 'specialties_shortcode');
 function specialties_shortcode($atts) {
@@ -872,30 +981,34 @@ function specialties_shortcode($atts) {
     ob_start();
 
     if ($query->have_posts()) {
-        echo '<div id="veterinary-section-'.$atts['category'].'" class="specialties-section veterinary-section veterinary-section-'.$atts['category'].'"><div class="container"><div class="row">';
+        echo '<div id="veterinary-section-'.$atts['category'].'" class="specialties-section veterinary-section veterinary-section-'.$atts['category'].'"><div class="container">';
 
 		echo '<h3 class="text-danger specialties_tax_name">' . esc_html($category_name) . '</h3>';
-        while ($query->have_posts()) {
-            $query->the_post();
-			$specialties_icon = get_field('specialties_icon');
-            $image_url = $specialties_icon['url']; ?>
-			<div class="col-12 col-md-6 col-lg-3">
-                <div class="service-card">
-					<?php if ($specialties_icon) : ?>
-                        <img class="img-fluid" src="<?php echo esc_url($image_url); ?>" alt="<?php the_title(); ?>">
-                    <?php endif; ?>
-                    <div class="card-body">
-                        <h3 class="card-title">
-							<a href="<?php the_permalink(); ?>" class="view-details" title="<?php echo get_the_title(); ?>" alt="<?php echo get_the_title(); ?>">
-								<?php the_title(); ?>
-							</a>
-						</h3>
-                        <?php echo get_the_excerpt(); ?>
+		echo '<div class="row">';
+            while ($query->have_posts()) {
+                $query->the_post();
+                global $post;
+                $paws_page_title     = get_the_title();
+				$paws_page_permalink = get_the_permalink();
+    			$specialties_icon    = get_field('specialties_icon');
+                $image_url           = $specialties_icon['url']; ?>
+    			<div class="col-12 col-md-6 col-lg-3 col-xl-3">
+                    <div class="service-card">
+    					<?php if ($specialties_icon) : ?>
+                            <img class="img-fluid" src="<?php echo esc_url($image_url); ?>" alt="<?php echo $paws_page_title; ?>">
+                        <?php endif; ?>
+                        <div class="card-body">
+                            <h3 class="card-title">
+    							<a href="<?php echo $paws_page_permalink; ?>" class="view-details" title="<?php echo $paws_page_title; ?>" alt="<?php echo $paws_page_title; ?>">
+    								<?php echo $paws_page_title; ?>
+    							</a>
+    						</h3>
+                            <?php the_excerpt(); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <?php
-        }
+                <?php
+            }
 
         echo '</div></div></div>';
     } else { ?>

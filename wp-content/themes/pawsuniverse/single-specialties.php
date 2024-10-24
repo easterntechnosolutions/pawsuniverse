@@ -47,12 +47,14 @@ if ( $hero_section_left_title ) {
 ?>
 
 <section id="hero-section" class="hero-section" style='background-image:url("<?php echo $feaured_image; ?>")'>
-	<div class="hero-inner-section">
-		<div class="hero-wrapper">
-			<header class="hero-header">
-				<h2 class="hero-title"><?php echo $hero_section_left_title; ?></h2>
-				<h3 class="hero-subtitle"><?php echo $hero_section_right_sub_title; ?></h3>
-			</header>
+	<div class="hero-inner-section container">
+		<div class="hero-wrapper row">
+			<div class="col-12 col-md-12 col-lg-6 col-xl-6">
+				<h1 class="hero-title"><?php echo $hero_section_left_title; ?></h1>
+			</div>
+			<div class="col-12 col-md-12 col-lg-6 col-xl-6">
+				<h2 class="hero-subtitle"><?php echo $hero_section_right_sub_title; ?></h2>
+			</div>
 		</div>
 	</div>
 </section>

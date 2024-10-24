@@ -2253,6 +2253,14 @@ body.get-in-touch .footer_fullwidth_image {
         font-size: 12px;
     }
 
+	#mega-menu-wrap-primary-navigation #mega-menu-primary-navigation li.mega-menu-megamenu > ul.mega-sub-menu > li.mega-menu-row .mega-menu-column > ul.mega-sub-menu > li.mega-menu-item {
+		padding: 0 !important;
+	}
+
+	#mega-menu-wrap-primary-navigation #mega-menu-primary-navigation li.mega-menu-item {
+		font-size: 12px !important;
+	}
+
 }
 
 @media only screen and (max-width: 380px) {
